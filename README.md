@@ -31,15 +31,18 @@ Este projeto simula um sistema de frente de caixa onde é possível visualizar e
   ```bash
   git clone https://github.com/paulosandim/feiras-nami
   cd feiras-nami
+  ```
 
 2. **Instale as Dependências**
 
   Certifique-se de ter o Flask instalado. Você pode instalar as dependências com:
   ```bash
   pip install flask
+  ```
 
 3. **Instale as Dependências**
 
   No terminal, execute o seguinte comando para iniciar o servidor Flask:
   ```bash
   python app.py
+  ```
