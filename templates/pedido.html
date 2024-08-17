@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Pedido</title>
+    <script>
+        function atualizarTotal() {
+            let total = 0;
+            const produtos = document.querySelectorAll('tr[data-produto]');
+
+            produtos.forEach(produto => {
+                const preco = parseFloat(produto.dataset.preco);
+                const quantidade = parseInt(produto.querySelector('select').value);
+                total += preco * quantidade;
+            });
+
+            document.getElementById('total_pedido').innerText = `R$ ${total.toFixed(2)}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectElements = document.querySelectorAll('select');
+
+            selectElements.forEach(select => {
+                select.addEventListener('change', atualizarTotal);
+            });
+
+            // Inicializa o total na primeira carga
+            atualizarTotal();
+        });
+    </script>
+</head>
+<body>
+    <h1>Pedido Número: {{ pedido.numero }}</h1>
+    <form action="#" method="post">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço (R$)</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in pedido.produtos %}
+                <tr data-produto="{{ produto.nome }}" data-preco="{{ produto.preco }}">
+                    <td>{{ produto.nome }}</td>
+                    <td>{{ produto.preco }}</td>
+                    <td>
+                        <select name="quantidade_{{ produto.nome }}">
+                            {% for i in range(11) %}
+                            <option value="{{ i }}" {% if i == produto.quantidade %}selected{% endif %}>{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h2>
+        <button type="submit">Atualizar Pedido</button>
+    </form>
+    <button onclick="window.print()">Imprimir</button>
+</body>
+</html>
