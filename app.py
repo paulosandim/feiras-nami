@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 # Dados do pedido
 pedido = {
-    "numero": 55,
+    "numero": 0,
     "produtos": [
         {"nome": "produto_1", "preco": 15, "quantidade": 0},
         {"nome": "produto_2", "preco": 25, "quantidade": 0},
@@ -23,6 +23,9 @@ def calcular_total_pedido():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        # Atualiza o número do pedido
+        pedido["numero"] = int(request.form.get('numero_pedido', pedido["numero"]))
+
         # Processa as quantidades atualizadas do formulário
         for produto in pedido["produtos"]:
             nome_produto = produto["nome"]
