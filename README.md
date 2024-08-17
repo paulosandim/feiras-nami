@@ -1,6 +1,6 @@
 # Frente de Caixa - Nami Street Food
 
-Minha esposa é trabalha com feiras e sempre utilizamos planilhas para fazer o controle de pedidos, porém, atualmente, precisamos de mais agilidade por conta do aumento de fluxo de pessoas. Isso me motivou a fazer um projeto de Frente de Caixa simples, desenvolvido como uma aplicação web usando Python e Flask. Além disso, todo código foi utilizando o ChatGPT como apoio e consultas. O objetivo do projeto é demonstrar como implementar um sistema de controle de pedidos e produtos com base em uma planilha que utilizavámos nas feiras.
+Minha esposa trabalha com feiras e sempre utilizamos planilhas para fazer o controle de pedidos, porém, atualmente, precisamos de mais agilidade por conta do aumento de fluxo de pessoas. Isso me motivou a fazer um projeto de Frente de Caixa simples, desenvolvido como uma aplicação web usando Python e Flask. Além disso, todo código foi utilizando o ChatGPT como apoio e consultas. O objetivo do projeto é demonstrar como implementar um sistema de controle de pedidos e produtos com base em uma planilha que utilizavámos nas feiras.
 
 ![Exemplo de Planilha que usamos nas feiras](exemplo-planilha.png)
 

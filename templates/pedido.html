@@ -9,6 +9,24 @@
             width: 200px; /* Define a largura do campo */
             padding: 8px; /* Opcional: adiciona algum preenchimento */
         }
+        .centrar-quantidade {
+            text-align: center; /* Centraliza o texto na célula */
+        }
+        .input-quantidade {
+            text-align: center; /* Centraliza o texto dentro do campo input */
+            width: 100%; /* Faz com que o campo ocupe toda a largura disponível */
+        }
+        table {
+            width: 100%; /* Define a largura da tabela */
+            border-collapse: collapse; /* Remove espaçamento entre bordas */
+        }
+        th, td {
+            border: 1px solid black; /* Adiciona bordas às células */
+            padding: 8px; /* Adiciona preenchimento às células */
+        }
+        th {
+            text-align: center; /* Centraliza o texto dos cabeçalhos */
+        }
     </style>
     <script>
         function atualizarTotal() {
@@ -61,7 +79,7 @@
         <input type="number" id="numero_pedido" name="numero_pedido" min="1" value="{{ pedido.numero }}" class="input-numero-pedido">
         <br><br>
 
-        <table border="1">
+        <table>
             <thead>
                 <tr>
                     <th>Produto</th>
@@ -72,8 +90,8 @@
                 {% for produto in pedido.produtos %}
                 <tr data-produto="{{ produto.nome }}" data-preco="{{ produto.preco }}">
                     <td>{{ produto.nome }}</td>
-                    <td>
-                        <input type="number" name="quantidade_{{ produto.nome }}" min="0" value="{{ produto.quantidade }}">
+                    <td class="centrar-quantidade">
+                        <input type="number" name="quantidade_{{ produto.nome }}" min="0" value="{{ produto.quantidade }}" class="input-quantidade">
                     </td>
                 </tr>
                 {% endfor %}
@@ -81,7 +99,7 @@
         </table>
         <h2>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h2>
         <button type="button" onclick="limparPedido()">Limpar Pedido</button>
-        <button type="button" onclick="imprimirEliminar()">Imprimir e Limpar Após Impressão</button>
+        <button type="button" onclick="imprimirEliminar()">Imprimir</button>
     </form>
 </body>
 </html>
