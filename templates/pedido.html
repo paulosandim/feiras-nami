@@ -27,6 +27,9 @@
         th {
             text-align: center; /* Centraliza o texto dos cabeçalhos */
         }
+        .oculto {
+            display: none; /* Oculta o elemento */
+        }
     </style>
     <script>
         function atualizarTotal() {
@@ -51,14 +54,27 @@
         }
 
         function imprimirEliminar() {
+            // Oculta produtos com quantidade 0
+            const produtos = document.querySelectorAll('tr[data-produto]');
+            produtos.forEach(produto => {
+                const quantidade = parseInt(produto.querySelector('input').value) || 0;
+                if (quantidade === 0) {
+                    produto.classList.add('oculto');
+                }
+            });
+
             // Chama a função de impressão
             window.print();
-        }
 
-        window.onafterprint = function() {
-            // Chama a função para limpar o pedido após a impressão
-            limparPedido();
-        };
+            // Restaura a visibilidade dos produtos após a impressão
+            window.onafterprint = function() {
+                const ocultos = document.querySelectorAll('.oculto');
+                ocultos.forEach(produto => {
+                    produto.classList.remove('oculto');
+                });
+                limparPedido(); // Limpa os campos após a impressão
+            };
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const inputElements = document.querySelectorAll('input[type="number"]');
