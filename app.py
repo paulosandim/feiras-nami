@@ -2,18 +2,21 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Dados do pedido
+# Dados do pedido inicial
 pedido = {
-    "numero": 0,
+    "numero": 1,
     "produtos": [
-        {"nome": "produto_1", "preco": 15, "quantidade": 0},
-        {"nome": "produto_2", "preco": 25, "quantidade": 0},
-        {"nome": "produto_3", "preco": 12, "quantidade": 0},
-        {"nome": "produto_4", "preco": 15, "quantidade": 0},
-        {"nome": "produto_5", "preco": 18, "quantidade": 0},
-        {"nome": "produto_6", "preco": 6, "quantidade": 0},
-        {"nome": "produto_7", "preco": 5, "quantidade": 0},
-        {"nome": "produto_8", "preco": 10, "quantidade": 0}
+        {"nome": "corn_dog", "preco": 18, "quantidade": 0},
+        {"nome": "hand_roll", "preco": 28, "quantidade": 0},
+        {"nome": "tonkatsu", "preco": 22, "quantidade": 0},
+        {"nome": "onigiri", "preco": 12, "quantidade": 0},
+        {"nome": "takoyaki", "preco": 28, "quantidade": 0},
+        {"nome": "mochi", "preco": 12, "quantidade": 0},
+        {"nome": "chiffon_cake", "preco": 22, "quantidade": 0},
+        {"nome": "cha_gelado", "preco": 10, "quantidade": 0},
+        {"nome": "adicional_tare", "preco": 5, "quantidade": 0},
+        {"nome": "refri", "preco": 6, "quantidade": 0},
+        {"nome": "agua", "preco": 5, "quantidade": 0}
     ]
 }
 
@@ -34,7 +37,7 @@ def index():
                 produto["quantidade"] = int(nova_quantidade)
 
     total_pedido = calcular_total_pedido()
-    return render_template('pedido.html', pedido=pedido, total_pedido=total_pedido)
+    return render_template('index.html', pedido=pedido, total_pedido=total_pedido)
 
 if __name__ == '__main__':
     app.run(debug=True)
