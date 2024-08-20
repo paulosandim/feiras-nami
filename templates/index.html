@@ -8,13 +8,43 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <!-- Import Google Icons (opcional) -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Estilo para ajustar a espessura das bordas das células da tabela */
+        table.striped {
+            border-collapse: collapse; /* Garante que as bordas das células se colidam */
+        }
+
+        table.striped th, table.striped td {
+            border: 1px solid #ddd; /* Define a espessura da borda das células */
+            padding: 8px; /* Ajusta o padding dentro das células */
+        }
+
+        table.striped tbody tr {
+            height: 20px; /* Ajusta a altura das linhas da tabela */
+        }
+
+        table.striped tbody td {
+            line-height: 20px; /* Ajusta a altura da linha do texto */
+        }
+
+        table.striped tbody td input {
+            height: 15px; /* Ajusta a altura dos campos de entrada */
+            padding: 0; /* Remove o padding para melhor ajuste */
+        }
+
+        /* Estilo para alinhar os botões à direita */
+        .btn-container {
+            text-align: right;
+            margin-top: 20px; /* Adiciona um espaço acima dos botões */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="center-align">Detalhes do Pedido</h1>
+        <h5 class="center-align">Pedido</h5>
         <form action="/" method="post" id="pedidoForm">
             <div class="input-field">
-                <label for="numero_pedido">Número do Pedido:</label>
+                <label for="numero_pedido">Número:</label>
                 <input type="number" id="numero_pedido" name="numero_pedido" min="1" value="{{ pedido.numero }}">
             </div>
 
@@ -37,10 +67,12 @@
                 </tbody>
             </table>
 
-            <h2>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h2>
+            <h5>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h5>
 
-            <button type="button" class="btn" onclick="limparPedido()">Limpar Pedido</button>
-            <button type="submit" class="btn">Enviar Pedido</button>
+            <div class="btn-container">
+                <button type="button" class="btn" onclick="limparPedido()">Limpar Pedido</button>
+                <button type="submit" class="btn">Enviar Pedido</button>
+            </div>
         </form>
     </div>
 
