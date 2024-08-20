@@ -16,7 +16,7 @@ Este projeto simula um sistema de frente de caixa onde é possível visualizar e
 ## Tecnologias Utilizadas
 
 - **Backend**: [Flask](https://flask.palletsprojects.com/) (framework web em Python)
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: [Materialize](https://materializecss.com/) 
 
 ## Estrutura do Projeto
 
