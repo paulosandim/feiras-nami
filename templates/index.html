@@ -6,14 +6,13 @@
     <title>Nami Street Food</title>
     <!-- Import Materialize CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-
     <!-- Import Google Icons (opcional) -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <h1 class="center-align">Detalhes do Pedido</h1>
-        <form action="#" method="post">
+        <form action="/" method="post" id="pedidoForm">
             <div class="input-field">
                 <label for="numero_pedido">Número do Pedido:</label>
                 <input type="number" id="numero_pedido" name="numero_pedido" min="1" value="{{ pedido.numero }}">
@@ -41,7 +40,7 @@
             <h2>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h2>
 
             <button type="button" class="btn" onclick="limparPedido()">Limpar Pedido</button>
-            <button type="button" id="imprimirBtn" class="btn">Imprimir</button>
+            <button type="submit" class="btn">Enviar Pedido</button>
         </form>
     </div>
 
@@ -49,51 +48,66 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     
     <script>
+        // Função para atualizar o total do pedido
+        function atualizarTotal() {
+            let total = 0;
+            const produtos = document.querySelectorAll('tr[data-produto]');
+            produtos.forEach(produto => {
+                const preco = parseFloat(produto.dataset.preco);
+                const quantidade = parseInt(produto.querySelector('input').value) || 0;
+                total += preco * quantidade;
+            });
+            document.getElementById('total_pedido').innerText = `R$ ${total.toFixed(2)}`;
+        }
+
+        // Função para limpar todos os campos do formulário
+        function limparPedido() {
+            // Limpa o campo de número do pedido
+            document.getElementById('numero_pedido').value = '0';
+
+            // Limpa os campos de quantidade dos produtos
+            document.querySelectorAll('tr[data-produto] input').forEach(input => {
+                input.value = '0'; // Define o valor dos campos como 0
+            });
+
+            // Atualiza o total do pedido
+            atualizarTotal();
+
+            // Log para depuração
+            console.log("Todos os campos foram limpos.");
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             const inputElements = document.querySelectorAll('input[type="number"]');
-            const imprimirBtn = document.getElementById('imprimirBtn');
-    
-            // Função para atualizar o total do pedido
-            function atualizarTotal() {
-                let total = 0;
-                const produtos = document.querySelectorAll('tr[data-produto]');
-    
-                produtos.forEach(produto => {
-                    const preco = parseFloat(produto.dataset.preco);
-                    const quantidade = parseInt(produto.querySelector('input').value) || 0;
-                    total += preco * quantidade;
-                });
-    
-                document.getElementById('total_pedido').innerText = `R$ ${total.toFixed(2)}`;
-            }
-    
-            // Função para limpar o pedido
-            function limparPedido() {
-                inputElements.forEach(input => {
-                    input.value = '0'; // Define o valor dos campos como 0
-                });
-                document.getElementById('total_pedido').innerText = 'R$ 0.00';
-            }
-    
+            const pedidoForm = document.getElementById('pedidoForm');
+
             // Função para imprimir e depois limpar o pedido
-            function imprimirPedido() {
+            function enviarPedido(event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+
+                // Atualiza o total do pedido
+                atualizarTotal();
+
+                // Imprime o conteúdo da página
                 window.print();
+
+                // Após a impressão, limpa todos os campos e envia o formulário
+                window.onafterprint = function() {
+                    limparPedido();
+                    pedidoForm.submit();
+                };
             }
-    
-            imprimirBtn.addEventListener('click', imprimirPedido);
-    
-            window.onafterprint = function() {
-                limparPedido();
-            };
-    
+
             // Associa o evento de atualização ao input de número
             inputElements.forEach(input => {
                 input.addEventListener('input', atualizarTotal);
             });
-    
+
             // Inicializa o total na primeira carga
             atualizarTotal();
+
+            // Adiciona o evento de submit ao formulário
+            pedidoForm.addEventListener('submit', enviarPedido);
         });
     </script>    
 </body>
