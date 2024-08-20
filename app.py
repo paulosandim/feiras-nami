@@ -6,17 +6,17 @@ app = Flask(__name__)
 pedido = {
     "numero": 1,
     "produtos": [
-        {"nome": "corn_dog", "preco": 18, "quantidade": 0},
-        {"nome": "hand_roll", "preco": 28, "quantidade": 0},
-        {"nome": "tonkatsu", "preco": 22, "quantidade": 0},
-        {"nome": "onigiri", "preco": 12, "quantidade": 0},
-        {"nome": "takoyaki", "preco": 28, "quantidade": 0},
-        {"nome": "mochi", "preco": 12, "quantidade": 0},
-        {"nome": "chiffon_cake", "preco": 22, "quantidade": 0},
-        {"nome": "cha_gelado", "preco": 10, "quantidade": 0},
-        {"nome": "adicional_tare", "preco": 5, "quantidade": 0},
-        {"nome": "refri", "preco": 6, "quantidade": 0},
-        {"nome": "agua", "preco": 5, "quantidade": 0}
+        {"nome": "CORN DOG", "preco": 18, "quantidade": 0},
+        {"nome": "HAND ROLL", "preco": 28, "quantidade": 0},
+        {"nome": "TONKATSU", "preco": 22, "quantidade": 0},
+        {"nome": "ONIGIRI", "preco": 12, "quantidade": 0},
+        {"nome": "TAKOYAKI", "preco": 28, "quantidade": 0},
+        {"nome": "MOCHI", "preco": 12, "quantidade": 0},
+        {"nome": "CHIFFON CAKE", "preco": 22, "quantidade": 0},
+        {"nome": "CHÁ GELADO", "preco": 10, "quantidade": 0},
+        {"nome": "ADIC.TARÊ", "preco": 5, "quantidade": 0},
+        {"nome": "REFRI", "preco": 6, "quantidade": 0},
+        {"nome": "ÁGUA", "preco": 5, "quantidade": 0}
     ]
 }
 
