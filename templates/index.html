@@ -4,110 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nami Street Food</title>
-    <style>
-        .input-numero-pedido {
-            width: 200px;
-            padding: 8px;
-        }
-        .centrar-quantidade {
-            text-align: center;
-        }
-        .input-quantidade {
-            text-align: center;
-            width: 100%;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-        th {
-            text-align: center;
-        }
-    </style>
+    <!-- Import Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <!-- Import Google Icons (opcional) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="center-align">Detalhes do Pedido</h1>
+        <form action="#" method="post">
+            <div class="input-field">
+                <label for="numero_pedido">Número do Pedido:</label>
+                <input type="number" id="numero_pedido" name="numero_pedido" min="1" value="{{ pedido.numero }}">
+            </div>
+
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto in pedido.produtos %}
+                    <tr data-produto="{{ produto.nome }}" data-preco="{{ produto.preco }}">
+                        <td>{{ produto.nome }}</td>
+                        <td class="center-align">
+                            <input type="number" name="quantidade_{{ produto.nome }}" min="0" value="{{ produto.quantidade }}" class="input-quantidade">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h2>
+
+            <button type="button" class="btn" onclick="limparPedido()">Limpar Pedido</button>
+            <button type="button" id="imprimirBtn" class="btn">Imprimir</button>
+        </form>
+    </div>
+
+    <!-- Import Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
     <script>
-        function atualizarTotal() {
-            let total = 0;
-            const produtos = document.querySelectorAll('tr[data-produto]');
 
-            produtos.forEach(produto => {
-                const preco = parseFloat(produto.dataset.preco);
-                const quantidade = parseInt(produto.querySelector('input').value) || 0;
-                total += preco * quantidade;
-            });
-
-            document.getElementById('total_pedido').innerText = `R$ ${total.toFixed(2)}`;
-        }
-
-        function limparPedido() {
-            const inputs = document.querySelectorAll('input[type="number"]');
-            inputs.forEach(input => {
-                input.value = '0';
-            });
-            document.getElementById('total_pedido').innerText = 'R$ 0.00';
-        }
-
-        function imprimirEliminar() {
-            const botoes = document.querySelectorAll('button');
-            botoes.forEach(botao => botao.style.display = 'none');
-            const linhas = document.querySelectorAll('tr[data-produto]');
-            linhas.forEach(linha => {
-                const quantidade = parseInt(linha.querySelector('input').value);
-                if (quantidade === 0) {
-                    linha.style.display = 'none';
-                }
-            });
-            window.print();
-            botoes.forEach(botao => botao.style.display = 'inline');
-            linhas.forEach(linha => linha.style.display = '');
-        }
-
-        window.onafterprint = function() {
-            limparPedido();
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             const inputElements = document.querySelectorAll('input[type="number"]');
-
+            const imprimirBtn = document.getElementById('imprimirBtn');
+    
+            // Função para atualizar o total do pedido
+            function atualizarTotal() {
+                let total = 0;
+                const produtos = document.querySelectorAll('tr[data-produto]');
+    
+                produtos.forEach(produto => {
+                    const preco = parseFloat(produto.dataset.preco);
+                    const quantidade = parseInt(produto.querySelector('input').value) || 0;
+                    total += preco * quantidade;
+                });
+    
+                document.getElementById('total_pedido').innerText = `R$ ${total.toFixed(2)}`;
+            }
+    
+            // Função para limpar o pedido
+            function limparPedido() {
+                inputElements.forEach(input => {
+                    input.value = '0'; // Define o valor dos campos como 0
+                });
+                document.getElementById('total_pedido').innerText = 'R$ 0.00';
+            }
+    
+            // Função para imprimir e depois limpar o pedido
+            function imprimirPedido() {
+                window.print();
+            }
+    
+            imprimirBtn.addEventListener('click', imprimirPedido);
+    
+            window.onafterprint = function() {
+                limparPedido();
+            };
+    
+            // Associa o evento de atualização ao input de número
             inputElements.forEach(input => {
                 input.addEventListener('input', atualizarTotal);
             });
-
+    
+            // Inicializa o total na primeira carga
             atualizarTotal();
         });
-    </script>
-</head>
-<body>
-    <h1>Detalhes do Pedido</h1>
-    <form action="/" method="post">
-        <label for="numero_pedido">Número do Pedido:</label>
-        <input type="number" id="numero_pedido" name="numero_pedido" min="1" value="{{ pedido.numero }}" class="input-numero-pedido">
-        <br><br>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for produto in pedido.produtos %}
-                <tr data-produto="{{ produto.nome }}" data-preco="{{ produto.preco }}">
-                    <td>{{ produto.nome.replace('_', ' ') }}</td>
-                    <td class="centrar-quantidade">
-                        <input type="number" name="quantidade_{{ produto.nome }}" min="0" value="{{ produto.quantidade }}" class="input-quantidade">
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <h2>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h2>
-        <button type="button" onclick="limparPedido()">Limpar Pedido</button>
-        <button type="button" onclick="imprimirEliminar()">Imprimir</button>
-    </form>
+    </script>    
 </body>
 </html>
