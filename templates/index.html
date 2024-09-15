@@ -78,7 +78,7 @@
             <h5>Total do Pedido: <span id="total_pedido">R$ 0.00</span></h5>
 
             <div class="btn-container">
-                <button type="button" class="btn" onclick="limparPedido()">Limpar Pedido</button>
+                <button type="button" class="btn" onclick="atualizarPagina()">Atualizar Página</button>
                 <button type="submit" class="btn">Enviar Pedido</button>
             </div>
         </form>
@@ -91,7 +91,7 @@
 
     <!-- Import Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
+
     <script>
         // Função para atualizar o total do pedido
         function atualizarTotal() {
@@ -105,43 +105,39 @@
             document.getElementById('total_pedido').innerText = `R$ ${total.toFixed(2)}`;
         }
 
-        // Função para limpar todos os campos do formulário
-        function limparPedido() {
-            // Limpa o campo de número do pedido
-            document.getElementById('numero_pedido').value = '0';
+        // Função para recarregar a página
+        function atualizarPagina() {
+            location.reload(); // Recarrega a página
+        }
 
-            // Limpa os campos de quantidade dos produtos
-            document.querySelectorAll('tr[data-produto] input').forEach(input => {
-                input.value = '0'; // Define o valor dos campos como 0
-            });
+        // Função para imprimir e depois limpar o pedido
+        function enviarPedido(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
 
             // Atualiza o total do pedido
             atualizarTotal();
 
-            // Log para depuração
-            console.log("Todos os campos foram limpos.");
+            // Remove produtos com quantidade 0 antes de imprimir
+            const produtos = document.querySelectorAll('tr[data-produto]');
+            produtos.forEach(produto => {
+                const quantidade = parseInt(produto.querySelector('input').value) || 0;
+                if (quantidade === 0) {
+                    produto.style.display = 'none'; // Oculta produtos com quantidade 0
+                }
+            });
+
+            // Imprime o conteúdo da página
+            window.print();
+
+            // Após a impressão, recarrega a página
+            window.onafterprint = function() {
+                atualizarPagina(); // Recarrega a página para limpar os campos
+            };
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             const inputElements = document.querySelectorAll('input[type="number"]');
             const pedidoForm = document.getElementById('pedidoForm');
-
-            // Função para imprimir e depois limpar o pedido
-            function enviarPedido(event) {
-                event.preventDefault(); // Impede o envio padrão do formulário
-
-                // Atualiza o total do pedido
-                atualizarTotal();
-
-                // Imprime o conteúdo da página
-                window.print();
-
-                // Após a impressão, limpa todos os campos e envia o formulário
-                window.onafterprint = function() {
-                    limparPedido();
-                    pedidoForm.submit();
-                };
-            }
 
             // Associa o evento de atualização ao input de número
             inputElements.forEach(input => {

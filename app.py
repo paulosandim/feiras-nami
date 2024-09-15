@@ -27,7 +27,7 @@ def calcular_total_pedido():
 def index():
     if request.method == 'POST':
         # Atualiza o número do pedido
-        pedido["numero"] = int(request.form.get('numero_pedido', pedido["numero"]))
+        pedido["numero"] = int(request.form.get('numero_pedido', pedido["numero"])) + 1
 
         # Processa as quantidades atualizadas do formulário
         for produto in pedido["produtos"]:
@@ -35,6 +35,10 @@ def index():
             nova_quantidade = request.form.get(f"quantidade_{nome_produto}")
             if nova_quantidade is not None:
                 produto["quantidade"] = int(nova_quantidade)
+
+        # Reseta as quantidades para 0 após o envio do pedido
+        for produto in pedido["produtos"]:
+            produto["quantidade"] = 0
 
     total_pedido = calcular_total_pedido()
     return render_template('index.html', pedido=pedido, total_pedido=total_pedido)
