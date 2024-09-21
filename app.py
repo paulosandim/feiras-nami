@@ -6,15 +6,14 @@ app = Flask(__name__)
 pedido = {
     "numero": 1,
     "produtos": [
-        {"nome": "CORN DOG", "preco": 18, "quantidade": 0},
-        {"nome": "HAND ROLL", "preco": 28, "quantidade": 0},
+        {"nome": "CORN_DOG", "preco": 18, "quantidade": 0},
+        {"nome": "HAND_ROLL", "preco": 28, "quantidade": 0},
         {"nome": "TONKATSU", "preco": 22, "quantidade": 0},
         {"nome": "ONIGIRI", "preco": 12, "quantidade": 0},
         {"nome": "TAKOYAKI", "preco": 28, "quantidade": 0},
         {"nome": "MOCHI", "preco": 12, "quantidade": 0},
-        {"nome": "CHIFFON CAKE", "preco": 22, "quantidade": 0},
-        {"nome": "CHÁ GELADO", "preco": 10, "quantidade": 0},
-        {"nome": "ADIC.TARÊ", "preco": 5, "quantidade": 0},
+        {"nome": "CHÁ", "preco": 10, "quantidade": 0},
+        {"nome": "TARÊ", "preco": 5, "quantidade": 0},
         {"nome": "REFRI", "preco": 6, "quantidade": 0},
         {"nome": "ÁGUA", "preco": 5, "quantidade": 0}
     ]
